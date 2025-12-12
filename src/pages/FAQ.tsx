@@ -18,7 +18,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'How long has Africa IT Solutions been in business?',
-    answer: 'We have over 15 years of industry experience, successfully completing 500+ projects with a team of 50+ experienced IT professionals.',
+    answer: 'We have over 2 years of industry experience, successfully completing 50+ projects with a team of 18+ experienced IT professionals.',
   },
   {
     question: 'Do you provide 24/7 support for networking services?',

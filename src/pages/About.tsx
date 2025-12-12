@@ -5,9 +5,9 @@ import networkSecurityImg from '../assets/network-security.webp'
 
 const stats = [
   { icon: <MapPin className="h-8 w-8" />, label: 'Location', value: 'Maputo, Mozambique' },
-  { icon: <Users className="h-8 w-8" />, label: 'Expert Team', value: '50+' },
-  { icon: <Award className="h-8 w-8" />, label: 'Projects Completed', value: '500+' },
-  { icon: <Target className="h-8 w-8" />, label: 'Years Experience', value: '15+' },
+  { icon: <Users className="h-8 w-8" />, label: 'Expert Team', value: '18+' },
+  { icon: <Award className="h-8 w-8" />, label: 'Projects Completed', value: '50+' },
+  { icon: <Target className="h-8 w-8" />, label: 'Years Experience', value: '2+' },
 ]
 
 export default function About() {

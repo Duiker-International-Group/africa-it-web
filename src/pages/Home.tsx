@@ -53,19 +53,19 @@ const benefits = [
   {
     icon: <Users className="h-6 w-6" />,
     title: 'Expert Team',
-    description: '50+ experienced professionals with 15+ years of industry expertise.',
+    description: '18+ experienced professionals with 2+ years of industry expertise.',
   },
   {
     icon: <Award className="h-6 w-6" />,
     title: 'Proven Track Record',
-    description: '500+ successful projects completed for businesses across Mozambique.',
+    description: '50+ successful projects completed for businesses across Mozambique.',
   },
 ]
 
 const stats = [
-  { value: '15+', label: 'Years Experience' },
-  { value: '500+', label: 'Projects Completed' },
-  { value: '50+', label: 'Expert Team Members' },
+  { value: '2+', label: 'Years Experience' },
+  { value: '50+', label: 'Projects Completed' },
+  { value: '18+', label: 'Expert Team Members' },
   { value: '100%', label: 'Client Satisfaction' },
 ]
 
@@ -270,7 +270,7 @@ export default function Home() {
         </div>
         
         <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 opacity-0">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat) => (
               <div
                 key={stat.label}
