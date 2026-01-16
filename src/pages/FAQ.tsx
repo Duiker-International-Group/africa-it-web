@@ -38,7 +38,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'How can I get a quote for your services?',
-    answer: 'You can contact us through our contact form on the website, email us at info@africait.co.mz, or call us at +258 86 108 5811 8. Our team will discuss your requirements and provide a customized quote.',
+    answer: 'You can contact us through our contact form on the website, email us at sales@africait.co.mz, or call us at +258 86 108 5811 8. Our team will discuss your requirements and provide a customized quote.',
   },
   {
     question: 'What are your business hours?',

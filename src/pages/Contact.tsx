@@ -60,8 +60,8 @@ export default function Contact() {
     {
       icon: <Mail className="h-6 w-6" />,
       label: 'Email',
-      value: 'info@africait.co.mz',
-      link: 'mailto:info@africait.co.mz',
+      value: 'sales@africait.co.mz',
+      link: 'mailto:sales@africait.co.mz',
     },
   ]
 

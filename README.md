@@ -120,7 +120,7 @@ npm run build
 
 - **Address**: Av. Vladimir Lenine, 1 Floor, Millenium Park Building, Maputo, Mozambique
 - **Phone**: +258 86 108 5811 8
-- **Email**: info@africait.co.mz
+- **Email**: sales@africait.co.mz
 - **Website**: africait.co.mz
 
 ## 🔧 Configuration Files

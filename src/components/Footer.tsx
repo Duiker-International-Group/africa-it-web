@@ -113,10 +113,10 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:info@africait.co.mz"
+                  href="mailto:sales@africait.co.mz"
                   className="hover:text-white transition-colors"
                 >
-                  info@africait.co.mz
+                  sales@africait.co.mz
                 </a>
               </li>
             </ul>
