@@ -43,11 +43,12 @@ export default function About() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 opacity-0 animate-fade-in">
+          <p className="text-sm font-semibold uppercase tracking-wider text-gray-600 mb-2">Authorised Starlink Retailer</p>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
             Your Trusted Technology Partner in Mozambique
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-            Africa IT Solutions is a Mozambican-based IT service provider headquartered in Maputo. With years of experience serving businesses across multiple sectors, we have established a reputation for delivering dependable, scalable, and forward-thinking technology solutions tailored to local and regional needs.
+            Africa IT Solutions is an Authorised Starlink Retailer and a Mozambican-based IT service provider headquartered in Maputo. We lead with Starlink satellite internet, then networking, software, hardware, and training. With years of experience serving businesses across multiple sectors, we deliver dependable, scalable, and forward-thinking technology solutions tailored to local and regional needs.
           </p>
           <div className="w-24 h-1 bg-black mx-auto mt-6" />
         </div>

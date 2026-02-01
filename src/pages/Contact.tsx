@@ -46,20 +46,26 @@ export default function Contact() {
 
   const contactInfo = [
     {
+      icon: <Mail className="h-6 w-6" />,
+      label: 'Starlink (Authorised Retailer)',
+      value: 'starlink@africait.co.mz',
+      link: 'mailto:starlink@africait.co.mz',
+    },
+    {
       icon: <MapPin className="h-6 w-6" />,
       label: 'Address',
-      value: 'Av. Vladimir Lenine, 1 Floor, Millenium Park Building, Maputo',
+      value: 'AV Abel Baptista esquina com avenida Samora MACHEL, Talhão número 374A, Loja número 3, Maputo',
       link: '#',
     },
     {
       icon: <Phone className="h-6 w-6" />,
       label: 'Phone',
-      value: '+258 86 108 5811 8',
-      link: 'tel:+2588610858118',
+      value: '+258 859232670',
+      link: 'tel:+258859232670',
     },
     {
       icon: <Mail className="h-6 w-6" />,
-      label: 'Email',
+      label: 'General / Sales',
       value: 'sales@africait.co.mz',
       link: 'mailto:sales@africait.co.mz',
     },
@@ -72,11 +78,12 @@ export default function Contact() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 opacity-0 animate-fade-in">
+          <p className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-2">Authorised Starlink Retailer</p>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Ready to Transform Your Business with Technology?
+            Ready to Get Starlink or Transform Your Business?
           </h1>
           <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto">
-            We're here to help you navigate the complexities of digital transformation and make technology work for your business.
+            Contact us for Starlink satellite internet or other IT solutions. We're here to help you get connected and make technology work for your business.
           </p>
           <div className="w-24 h-1 bg-white mx-auto mt-6" />
         </div>

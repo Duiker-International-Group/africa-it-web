@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { ChevronDown, Network, Code, Server, GraduationCap, ArrowRight, Shield, Zap, Users, Award } from 'lucide-react'
+import { ChevronDown, Network, Code, Server, GraduationCap, Satellite, ArrowRight, Shield, Zap, Users, Award } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import itInfraImg from '../assets/it-infrastructure.jpeg'
 import networkingImg from '../assets/Networking-IT-Infrastructure.jpg'
@@ -7,8 +7,17 @@ import appDevImg from '../assets/app-development.jpg'
 import trainingImg from '../assets/training-programs.webp'
 import networkSecurityImg from '../assets/network-security.webp'
 import networkDesignImg from '../assets/network-design-2.jpg'
+import starlinkHeroImg from '../assets/241002-starlink-vl-1242p-d76b6d.webp'
+import starlinkCardImg from '../assets/IMG_1585-2.avif'
 
 const services = [
+  {
+    icon: <Satellite className="h-8 w-8" />,
+    title: 'Starlink Hardware & Services',
+    description: 'Africa IT Solutions is an Authorised Starlink Retailer. High-speed satellite internet with professional installation and local support.',
+    image: starlinkCardImg,
+    link: '/services#starlink',
+  },
   {
     icon: <Network className="h-8 w-8" />,
     title: 'Networking Solutions',
@@ -168,7 +177,7 @@ export default function Home() {
       {/* Hero Section */}
       <section
         ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden"
+        className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden pb-24"
       >
         {/* Background Image */}
         <div className="absolute inset-0 overflow-hidden z-0">
@@ -178,8 +187,8 @@ export default function Home() {
             style={{ transform: 'translate3d(0, 0, 0)' }}
           >
             <img
-              src={itInfraImg}
-              alt="IT Infrastructure"
+              src={starlinkHeroImg}
+              alt="Starlink satellite internet"
               className="w-full h-full object-cover opacity-30"
             />
           </div>
@@ -195,8 +204,11 @@ export default function Home() {
         {/* Grid Pattern Overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0" />
 
-        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 text-center pt-24 sm:pt-28">
           <div className="space-y-6 sm:space-y-8">
+            <p className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-semibold uppercase tracking-wider opacity-0 animate-slide-up">
+              Authorised Starlink Retailer
+            </p>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
               <span className="block opacity-0 animate-slide-up">Empowering</span>
               <span className="block mt-2 opacity-0 animate-slide-up delay-200">
@@ -208,19 +220,19 @@ export default function Home() {
             </h1>
 
             <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto opacity-0 animate-slide-up delay-600">
-              At Africa IT Solutions, we believe that every organization—no matter its size—should have access to world-class technology that drives growth, efficiency, and innovation. Based in Maputo, Mozambique, we are a trusted IT partner dedicated to delivering robust, reliable, and future-ready technology services.
+              Africa IT Solutions is an Authorised Starlink Retailer in Africa. We deliver high-speed satellite internet, professional installation, and local support—alongside networking, software, hardware, and IT training. Based in Maputo, Mozambique, we are your trusted technology partner.
             </p>
 
             <p className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto opacity-0 animate-slide-up delay-700">
-              From modernizing legacy systems to implementing secure infrastructure and custom software, our solutions are designed to help you stay competitive in a rapidly evolving digital landscape.
+              Get Starlink hardware at official pricing with immediate availability. Pay with cash or mobile money. From remote locations to enterprise connectivity, we help you stay connected.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8 opacity-0 animate-slide-up delay-800">
               <Link
-                to="/services"
+                to="/services#starlink"
                 className="px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                Our Services
+                Get Starlink
               </Link>
               <Link
                 to="/contact"
@@ -233,7 +245,7 @@ export default function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce z-20">
           <a
             href="#services-preview"
             onClick={(e) => {
@@ -306,11 +318,14 @@ export default function Home() {
         
         <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
+            <p className="text-sm font-semibold uppercase tracking-wider text-gray-600 mb-2">
+              Authorised Starlink Retailer
+            </p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
               Our Comprehensive IT Services
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-              From networking and software development to hardware support and training, we provide end-to-end IT solutions tailored to your business needs.
+              Starlink hardware and connectivity lead our offering—followed by networking, software development, hardware support, and IT training. End-to-end solutions tailored to your needs.
             </p>
             <div className="w-24 h-1 bg-black mx-auto mt-6" />
           </div>

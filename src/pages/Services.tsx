@@ -1,16 +1,22 @@
 import { useEffect, useRef } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import {
   Network,
   Code,
   Server,
   GraduationCap,
+  Satellite,
   ArrowRight,
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import networkingImg from '../assets/Networking-IT-Infrastructure.jpg'
 import appDevImg from '../assets/app-development.jpg'
 import itInfraImg from '../assets/it-infrastructure.jpeg'
 import trainingImg from '../assets/training-programs.webp'
+import starlinkMainImg from '../assets/241002-starlink-vl-1242p-d76b6d.webp'
+import starlinkOutdoorImg from '../assets/IMG_1585-2.avif'
+import starlinkRoamImg from '../assets/spacex_gives_discounted_starlink_roam_a_spin_in_canada_edited_1761742300.png'
+import starlinkKenyaImg from '../assets/Starlink-Mobile-Regional-roaming-subcription-fees-in-Kenya-1.jpg'
+import starlinkYuhImg from '../assets/starlink-yuh.jpg'
 
 interface Service {
   icon: React.ReactNode
@@ -22,6 +28,25 @@ interface Service {
 }
 
 const services: Service[] = [
+  {
+    icon: <Satellite className="h-12 w-12" />,
+    title: 'Starlink Hardware & Services',
+    description:
+      'Africa IT Solutions is an Authorised Starlink Retailer in Africa. Get high-speed satellite internet with professional installation and local support.',
+    features: [
+      'Immediate Hardware Availability',
+      'Professional Installation',
+      '24/7 Local Support',
+      'Cash & Mobile Money Payments',
+    ],
+    image: starlinkMainImg,
+    details: [
+      'Higher reliability with a higher gain antenna, additional throughput allocation, and enhanced performance in extreme weather—perfect for rural and remote locations.',
+      'Enjoy network priority with speeds up to 250 Mbps for downloads, 35 Mbps for uploads, and latency between 25–50 ms, supporting over 125 users simultaneously.',
+      'Your High Performance Kit includes everything needed to get online: Starlink, power supply, wall mount, WiFi router, cables, and base. Plus, benefit from 24/7 prioritized local support.',
+      'Pay with cash or mobile money—no credit card required—for your convenience.',
+    ],
+  },
   {
     icon: <Network className="h-12 w-12" />,
     title: 'Networking Solutions',
@@ -101,8 +126,16 @@ const services: Service[] = [
 ]
 
 export default function Services() {
+  const location = useLocation()
   const sectionRef = useRef<HTMLDivElement>(null)
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  useEffect(() => {
+    if (location.hash === '#starlink') {
+      const el = document.getElementById('starlink')
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [location])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -129,15 +162,29 @@ export default function Services() {
     return () => observer.disconnect()
   }, [])
 
+  const starlinkGallery = [starlinkOutdoorImg, starlinkRoamImg, starlinkKenyaImg, starlinkYuhImg]
+
   return (
     <section className="py-20 sm:py-24 lg:py-32 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 rounded-xl bg-gray-900 text-white p-6 sm:p-8 text-center opacity-0 animate-fade-in">
+          <p className="text-sm font-semibold uppercase tracking-wider text-gray-300 mb-2">
+            Official Partner
+          </p>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-2">
+            Africa IT Solutions is an Authorised Starlink Retailer
+          </h2>
+          <p className="text-gray-300 max-w-2xl mx-auto">
+            Get high-speed satellite internet with professional installation and local support. Starlink leads our service offering across Africa.
+          </p>
+        </div>
+
         <div className="text-center mb-16 opacity-0 animate-fade-in">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
             Comprehensive IT Solutions to Meet All Your Technology Needs
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-            Your business deserves IT services that are not only powerful but also easy to manage and tailored to your unique goals. Our full suite of services is built to support organizations at every stage of their digital transformation journey—from establishing core infrastructure to developing custom applications and training your team for success.
+            Starlink hardware and connectivity come first—followed by networking, software, hardware support, and IT training. Our full suite is built to support organizations at every stage of their digital transformation.
           </p>
           <div className="w-24 h-1 bg-black mx-auto mt-6" />
         </div>
@@ -146,6 +193,7 @@ export default function Services() {
           {services.map((service, index) => (
             <div
               key={service.title}
+              id={service.title.includes('Starlink') ? 'starlink' : undefined}
               ref={(el) => {
                 cardRefs.current[index] = el
               }}
@@ -176,7 +224,7 @@ export default function Services() {
 
                   <div className="mb-6">
                     <h3 className="text-xl font-semibold text-black mb-4">
-                      Our {service.title.includes('Training') ? 'Training Programs' : service.title.includes('Development') ? 'Development Capabilities' : service.title.includes('Hardware') ? 'Hardware Services Include' : 'Networking Expertise Includes'}:
+                      Our {service.title.includes('Starlink') ? 'Starlink Services Include' : service.title.includes('Training') ? 'Training Programs' : service.title.includes('Development') ? 'Development Capabilities' : service.title.includes('Hardware') ? 'Hardware Services Include' : 'Networking Expertise Includes'}:
                     </h3>
                     <ul className="space-y-3">
                       {service.features.map((feature, idx) => (
@@ -190,6 +238,21 @@ export default function Services() {
                       ))}
                     </ul>
                   </div>
+                  {service.title.includes('Starlink') && (
+                    <div className="mt-6 pt-6 border-t border-gray-200">
+                      <p className="text-sm font-semibold text-gray-600 mb-3">Starlink in action</p>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        {starlinkGallery.map((img, i) => (
+                          <img
+                            key={i}
+                            src={img}
+                            alt="Starlink deployment"
+                            className="w-full h-24 sm:h-28 object-cover rounded-lg"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -198,18 +261,19 @@ export default function Services() {
 
         {/* CTA Section */}
         <div className="mt-20 text-center bg-gradient-to-r from-gray-900 to-black rounded-xl p-12 text-white">
+          <p className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-2">Authorised Starlink Retailer</p>
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Ready to Get Started?
+            Ready to Get Starlink or Other IT Solutions?
           </h2>
           <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Let's discuss how our IT solutions can transform your business operations and drive growth.
+            Get high-speed satellite internet or discuss networking, software, hardware, and training. We're here to help.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
               className="px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
-              Contact Us Today
+              Get Starlink / Contact Us
             </Link>
             <Link
               to="/about"

@@ -18,6 +18,7 @@ const quickLinks = [
 ]
 
 const services = [
+  'Starlink Hardware & Services',
   'Networking Solutions',
   'Software Development',
   'Hardware Sales & Support',
@@ -40,8 +41,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-gray-400 leading-relaxed">
-              Leading IT solutions provider in Mozambique, delivering
-              comprehensive technology services to drive business success.
+              Africa IT Solutions is an Authorised Starlink Retailer and leading IT solutions provider in Mozambique, delivering Starlink connectivity and comprehensive technology services.
             </p>
             <div className="flex space-x-4 pt-4">
               {socialLinks.map((social) => (
@@ -84,9 +84,18 @@ export default function Footer() {
             <ul className="space-y-2">
               {services.map((service) => (
                 <li key={service}>
-                  <span className="text-gray-400 hover:text-white transition-colors duration-200 cursor-default">
-                    {service}
-                  </span>
+                  {service === 'Starlink Hardware & Services' ? (
+                    <Link
+                      to="/services#starlink"
+                      className="text-gray-400 hover:text-white transition-colors duration-200"
+                    >
+                      {service}
+                    </Link>
+                  ) : (
+                    <span className="text-gray-400 hover:text-white transition-colors duration-200 cursor-default">
+                      {service}
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>
@@ -99,16 +108,17 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3 text-gray-400">
               <li>
-                <span className="block">Av. Vladimir Lenine</span>
-                <span className="block">1 Floor, Millenium Park Building</span>
+                <span className="block">AV Abel Baptista esquina com avenida Samora MACHEL</span>
+                <span className="block">Talhão número 374A</span>
+                <span className="block">Loja número 3</span>
                 <span className="block">Maputo, Mozambique</span>
               </li>
               <li>
                 <a
-                  href="tel:+2588610858118"
+                  href="tel:+258859232670"
                   className="hover:text-white transition-colors"
                 >
-                  +258 86 108 5811 8
+                  +258 859232670
                 </a>
               </li>
               <li>
@@ -117,6 +127,14 @@ export default function Footer() {
                   className="hover:text-white transition-colors"
                 >
                   sales@africait.co.mz
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:starlink@africait.co.mz"
+                  className="hover:text-white transition-colors"
+                >
+                  starlink@africait.co.mz
                 </a>
               </li>
             </ul>

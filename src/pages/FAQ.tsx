@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ChevronDown } from 'lucide-react'
+import starlinkFaqImg from '../assets/starlink-yuh.jpg'
 
 interface FAQItem {
   question: string
@@ -9,12 +10,36 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
+    question: 'Is Africa IT Solutions an Authorised Starlink Retailer?',
+    answer: 'Yes. Africa IT Solutions is an Authorised Starlink Retailer in Africa. We provide high-speed, low-latency satellite internet connectivity across the continent.',
+  },
+  {
+    question: 'Does Africa IT Solutions help with Starlink installation?',
+    answer: 'Yes, we provide a one-on-one installation service to help you get up and running as quickly as possible.',
+  },
+  {
+    question: 'How much is a Starlink from Africa IT Solutions?',
+    answer: 'We retail Starlink kits at the exact price you\'ll find on Starlink\'s website. The best part? You can have your device immediately and pay with cash or mobile money if you don\'t have a credit or debit card.',
+  },
+  {
+    question: 'Can I pick up my device immediately after payment?',
+    answer: 'Yes, you can pick up your device immediately after payment. Our installation team will help you get up and running as quickly as possible.',
+  },
+  {
+    question: 'What is Starlink?',
+    answer: 'Starlink offers high-speed, low-latency internet via a satellite constellation, providing global coverage, especially in rural or underserved areas. It aims to bridge the digital divide by delivering reliable internet access where traditional options are limited.',
+  },
+  {
+    question: 'Why should I choose Africa IT Solutions for my Starlink needs?',
+    answer: 'As an Authorised Starlink Retailer, we offer a plug-and-play solution that ensures reliable and fast internet connectivity, even in the most remote areas of Africa. Contact us at starlink@africait.co.mz for inquiries.',
+  },
+  {
     question: 'What IT services does Africa IT Solutions provide?',
-    answer: 'We offer comprehensive IT services including networking solutions (design, architecture, security, and monitoring), custom software development (web and mobile applications, enterprise software, APIs, and system integration), hardware sales and support (procurement, installation, maintenance, and technical support), and IT training for corporates (custom programs, certification courses, on-site and remote training).',
+    answer: 'We are an Authorised Starlink Retailer and offer Starlink hardware and services first, followed by networking solutions (design, architecture, security, and monitoring), custom software development (web and mobile applications, enterprise software, APIs, and system integration), hardware sales and support (procurement, installation, maintenance, and technical support), and IT training for corporates (custom programs, certification courses, on-site and remote training).',
   },
   {
     question: 'Where is Africa IT Solutions located?',
-    answer: 'We are headquartered in Maputo, Mozambique, with our office located at Av. Vladimir Lenine, 1 Floor, Millenium Park Building. We serve clients locally and regionally across Africa.',
+    answer: 'We are headquartered in Maputo, Mozambique, with our office located at AV Abel Baptista esquina com avenida Samora MACHEL, Talhão número 374A, Loja número 3. We serve clients locally and regionally across Africa.',
   },
   {
     question: 'How long has Africa IT Solutions been in business?',
@@ -30,7 +55,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'What types of hardware do you sell and support?',
-    answer: 'We provide a wide range of hardware solutions, from desktops and laptops to enterprise-grade servers and networking equipment. We handle procurement, installation, configuration, maintenance, and repairs for all hardware needs.',
+    answer: 'We provide a wide range of hardware solutions, including Starlink satellite internet kits, desktops and laptops, and enterprise-grade servers and networking equipment. We handle procurement, installation, configuration, maintenance, and repairs for all hardware needs.',
   },
   {
     question: 'Do you offer IT training for corporate teams?',
@@ -38,7 +63,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'How can I get a quote for your services?',
-    answer: 'You can contact us through our contact form on the website, email us at sales@africait.co.mz, or call us at +258 86 108 5811 8. Our team will discuss your requirements and provide a customized quote.',
+    answer: 'You can contact us through our contact form on the website, email us at sales@africait.co.mz or starlink@africait.co.mz for Starlink inquiries, or call us at +258 859232670. Our team will discuss your requirements and provide a customized quote.',
   },
   {
     question: 'What are your business hours?',
@@ -54,7 +79,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'What makes Africa IT Solutions different from other IT providers?',
-    answer: 'We combine localized understanding with global-standard technology practices. Our team brings deep technical expertise, strategic insight, and a client-centric approach to every engagement. We focus on delivering long-term value and measurable impact for our clients.',
+    answer: 'We are an Authorised Starlink Retailer and combine localized understanding with global-standard technology practices. Our team brings deep technical expertise, strategic insight, and a client-centric approach to every engagement. We focus on delivering long-term value and measurable impact for our clients.',
   },
 ]
 
@@ -89,12 +114,27 @@ export default function FAQ() {
       className="py-20 sm:py-24 lg:py-32 bg-white"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 rounded-xl overflow-hidden border border-gray-200 opacity-0 animate-fade-in">
+          <div className="relative h-48 sm:h-56">
+            <img
+              src={starlinkFaqImg}
+              alt="Starlink - Authorised Starlink Retailer"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+              <div className="text-center text-white px-4">
+                <p className="text-sm font-semibold uppercase tracking-wider mb-1">Africa IT Solutions</p>
+                <h2 className="text-2xl sm:text-3xl font-bold">Authorised Starlink Retailer</h2>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="text-center mb-16 opacity-0 animate-fade-in">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
             Frequently Asked Questions
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-            Find answers to common questions about our IT services and solutions
+            Find answers about Starlink and our IT services and solutions
           </p>
           <div className="w-24 h-1 bg-black mx-auto mt-6" />
         </div>
@@ -132,14 +172,15 @@ export default function FAQ() {
         </div>
 
         <div className="mt-16 text-center bg-gradient-to-r from-gray-900 to-black rounded-xl p-12 text-white">
+          <p className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-2">Authorised Starlink Retailer</p>
           <p className="text-lg text-gray-300 mb-6">
-            Still have questions? We're here to help!
+            Still have questions? Contact us for Starlink or other IT solutions—we're here to help!
           </p>
           <Link
             to="/contact"
             className="inline-block px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
-            Contact Us
+            Get Starlink / Contact Us
           </Link>
         </div>
       </div>

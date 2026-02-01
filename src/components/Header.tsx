@@ -11,6 +11,9 @@ export default function Header({ isScrolled }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const location = useLocation()
 
+  const isHome = location.pathname === '/'
+  const useLightText = isScrolled || isHome
+
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden'
@@ -28,6 +31,7 @@ export default function Header({ isScrolled }: HeaderProps) {
 
   const navItems = [
     { label: 'Home', href: '/' },
+    { label: 'Starlink', href: '/services#starlink' },
     { label: 'Services', href: '/services' },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
@@ -58,10 +62,18 @@ export default function Header({ isScrolled }: HeaderProps) {
               <Link
                 key={item.href}
                 to={item.href}
-                className="text-white hover:text-gray-300 transition-colors duration-200 font-medium text-sm uppercase tracking-wide relative group"
+                className={`transition-colors duration-200 font-medium text-sm uppercase tracking-wide relative group ${
+                  useLightText
+                    ? 'text-white hover:text-gray-300'
+                    : 'text-black hover:text-gray-700'
+                }`}
               >
                 {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
+                <span
+                  className={`absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${
+                    useLightText ? 'bg-white' : 'bg-black'
+                  }`}
+                />
               </Link>
             ))}
           </div>
@@ -69,7 +81,9 @@ export default function Header({ isScrolled }: HeaderProps) {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-white p-2"
+            className={`md:hidden p-2 transition-colors duration-200 ${
+              useLightText ? 'text-white' : 'text-black'
+            }`}
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (

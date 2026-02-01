@@ -48,20 +48,26 @@ export default function Contact() {
     {
       icon: <MapPin className="h-6 w-6" />,
       label: 'Address',
-      value: 'Av. Vladimir Lenine, 1 Floor, Millenium Park Building, Maputo',
+      value: 'AV Abel Baptista esquina com avenida Samora MACHEL, Talhão número 374A, Loja número 3, Maputo',
       link: '#',
     },
     {
       icon: <Phone className="h-6 w-6" />,
       label: 'Phone',
-      value: '+258 86 108 5811 8',
-      link: 'tel:+2588610858118',
+      value: '+258 859232670',
+      link: 'tel:+258859232670',
     },
     {
       icon: <Mail className="h-6 w-6" />,
       label: 'Email',
       value: 'sales@africait.co.mz',
       link: 'mailto:sales@africait.co.mz',
+    },
+    {
+      icon: <Mail className="h-6 w-6" />,
+      label: 'Starlink',
+      value: 'starlink@africait.co.mz',
+      link: 'mailto:starlink@africait.co.mz',
     },
   ]
 

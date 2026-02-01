@@ -118,9 +118,9 @@ npm run build
 
 ## 📞 Contact Information
 
-- **Address**: Av. Vladimir Lenine, 1 Floor, Millenium Park Building, Maputo, Mozambique
-- **Phone**: +258 86 108 5811 8
-- **Email**: sales@africait.co.mz
+- **Address**: AV Abel Baptista esquina com avenida Samora MACHEL, Talhão número 374A, Loja número 3, Maputo, Mozambique
+- **Phone**: +258 859232670
+- **Email**: sales@africait.co.mz, starlink@africait.co.mz
 - **Website**: africait.co.mz
 
 ## 🔧 Configuration Files
