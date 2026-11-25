@@ -18,9 +18,36 @@ const json = (data: unknown, status = 200) =>
 const str = (v: unknown, max: number) =>
   typeof v === 'string' ? v.trim().slice(0, max) : ''
 
+const NOTIFY_TO = 'sales@africait.co.mz'
+const NOTIFY_FROM = { name: 'Africa IT Website', email: 'website@africait.co.mz' }
+
+const escapeHtml = (v: string) =>
+  v.replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]!)
+
+interface ContactMessage { name: string; email: string; phone: string; message: string; country: string | null }
+
+async function notifySales(env: Env, m: ContactMessage): Promise<void> {
+  const rows: [string, string][] = [
+    ['Name', m.name],
+    ['Email', m.email],
+    ['Phone', m.phone || '—'],
+    ['Country', m.country || '—'],
+  ]
+  await env.EMAIL.send({
+    from: NOTIFY_FROM,
+    to: NOTIFY_TO,
+    replyTo: { name: m.name, email: m.email },
+    subject: `Website enquiry from ${m.name}`,
+    text: `${rows.map(([k, v]) => `${k}: ${v}`).join('\n')}\n\n${m.message}\n\nReply to this email to answer ${m.name} directly.`,
+    html: `<table>${rows.map(([k, v]) => `<tr><td><b>${k}</b></td><td>${escapeHtml(v)}</td></tr>`).join('')}</table>
+<p style="white-space:pre-wrap">${escapeHtml(m.message)}</p>
+<p style="color:#666">Reply to this email to answer ${escapeHtml(m.name)} directly.</p>`,
+  })
+}
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-async function handleContact(request: Request, env: Env): Promise<Response> {
+async function handleContact(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   if (request.method !== 'POST') return json({ error: 'Method not allowed' }, 405)
 
   const origin = request.headers.get('Origin')
@@ -61,16 +88,24 @@ async function handleContact(request: Request, env: Env): Promise<Response> {
     )
     .run()
 
+  // Message is safely stored; email in the background so a mail hiccup never fails the form.
+  const country = request.headers.get('CF-IPCountry')
+  ctx.waitUntil(
+    notifySales(env, { name, email, phone, message, country }).catch((err) =>
+      console.error('contact notification email failed', err),
+    ),
+  )
+
   return json({ ok: true }, 201)
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url)
 
     if (url.pathname === '/api/contact') {
       try {
-        return await handleContact(request, env)
+        return await handleContact(request, env, ctx)
       } catch (err) {
         console.error('contact form error', err)
         return json({ error: 'Server error' }, 500)

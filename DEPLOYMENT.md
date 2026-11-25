@@ -33,5 +33,17 @@ npm run db:migrate   # apply migrations/ to the production D1 database
 npx cf d1 query b0e1de90-388a-44cc-8a13-bff2fad691c8 --sql "SELECT created_at, name, email, phone, message FROM contact_messages ORDER BY id DESC LIMIT 50"
 ```
 
-Email notification is not wired up yet: the zone has no MX records, so
-`sales@` / `starlink@africait.co.mz` cannot receive mail today.
+## Email
+
+- Mailboxes are hosted on **Zoho Mail** (US region): MX `mx/mx2/mx3.zoho.com`,
+  SPF `include:zoho.com`, DKIM selector `zmail`, DMARC `p=none`.
+- Each form submission is also emailed to `sales@africait.co.mz` from
+  `website@africait.co.mz` via Cloudflare Email Sending (`env.EMAIL`), with
+  Reply-To set to the visitor. Its bounce/DKIM records live under `cf-bounce.`
+  and do not touch the Zoho records.
+- On the Workers free plan, Cloudflare only sends to **verified** destination
+  addresses. To notify another inbox, add it with
+  `npx cf email-routing addresses create --email <address>`, click the
+  verification link, and change `NOTIFY_TO` in `worker/index.ts`.
+- If an email fails, the message is still saved in D1; check
+  `npx wrangler tail africait-web` for `contact notification email failed`.

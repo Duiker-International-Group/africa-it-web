@@ -11,6 +11,7 @@ export default defineConfig({
     },
     domains: ['africait.co.mz', 'www.africait.co.mz'],
     env: {
+      EMAIL: bindings.sendEmail({ allowedSenderAddresses: ['website@africait.co.mz'] }),
       DB: bindings.d1({ name: 'africait-contact', id: 'b0e1de90-388a-44cc-8a13-bff2fad691c8' }),
     },
   },
