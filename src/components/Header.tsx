@@ -25,10 +25,6 @@ export default function Header({ isScrolled }: HeaderProps) {
     }
   }, [isMobileMenuOpen])
 
-  useEffect(() => {
-    setIsMobileMenuOpen(false)
-  }, [location])
-
   const navItems = [
     { label: 'Home', href: '/' },
     { label: 'Starlink', href: '/services#starlink' },
@@ -62,6 +58,7 @@ export default function Header({ isScrolled }: HeaderProps) {
               <Link
                 key={item.href}
                 to={item.href}
+                onClick={() => setIsMobileMenuOpen(false)}
                 className={`transition-colors duration-200 font-medium text-sm uppercase tracking-wide relative group ${
                   useLightText
                     ? 'text-white hover:text-gray-300'

@@ -10,7 +10,7 @@ A modern, responsive website for Africa IT Solutions, a Mozambican-based IT serv
 - **Animations** - Beautiful fade-in and slide-up animations throughout
 - **Professional UI** - Clean design with grey, black, and white color scheme
 - **FAQ Section** - Comprehensive FAQ page with accordion-style questions
-- **Contact Form** - Functional contact form with validation
+- **Contact Form** - Submissions stored in Cloudflare D1 via `/api/contact`
 - **SEO Optimized** - Proper meta tags and semantic HTML
 
 ## 🛠️ Tech Stack
@@ -21,7 +21,7 @@ A modern, responsive website for Africa IT Solutions, a Mozambican-based IT serv
 - **React Router DOM** - Client-side routing
 - **Tailwind CSS 4** - Utility-first CSS framework
 - **Lucide React** - Beautiful icon library
-- **Netlify** - Deployment platform
+- **Cloudflare Workers** - Hosting (static assets + contact API), D1 for form submissions
 
 ## 📦 Installation
 
@@ -56,7 +56,8 @@ npm run dev
 africanit-web/
 ├── public/
 │   ├── favicon.png          # Site favicon
-│   └── _redirects           # Netlify SPA routing
+│   ├── robots.txt / sitemap.xml
+│   └── og-image.jpg         # Social share image
 ├── src/
 │   ├── assets/              # Images and static assets
 │   ├── components/          # Reusable components
@@ -72,22 +73,17 @@ africanit-web/
 │   ├── App.tsx              # Main app component with routing
 │   ├── main.tsx             # Entry point
 │   └── index.css            # Global styles
-├── netlify.toml             # Netlify configuration
+├── worker/index.ts          # Cloudflare Worker: /api/contact
+├── migrations/              # D1 schema
+├── cloudflare.config.ts     # Worker, assets, domains, D1 binding
 └── vite.config.ts           # Vite configuration
 ```
 
 ## 🌐 Deployment
 
-### Netlify Deployment
+### Cloudflare Workers
 
-The project is configured for automatic deployment on Netlify:
-
-1. **Automatic Deployment**: Connect your GitHub repository to Netlify
-2. **Build Settings** (auto-detected from `netlify.toml`):
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-3. **SPA Routing**: All routes redirect to `index.html` for client-side routing
-4. **MIME Types**: Proper headers configured for JavaScript modules
+Deployed to `africait.co.mz` with `npm run deploy` (the `cf` CLI). See [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ### Manual Deployment
 
@@ -125,7 +121,7 @@ npm run build
 
 ## 🔧 Configuration Files
 
-- `netlify.toml` - Netlify deployment configuration
+- `cloudflare.config.ts` - Cloudflare Worker configuration
 - `vite.config.ts` - Vite build configuration
 - `tsconfig.json` - TypeScript configuration
 - `tailwind.config` - Tailwind CSS configuration (inline in index.css)

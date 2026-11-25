@@ -27,12 +27,24 @@ export default function Contact() {
     return () => observer.disconnect()
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
-    alert('Thank you for your message! We will get back to you soon.')
-    setFormData({ name: '', email: '', phone: '', message: '' })
+    setStatus('sending')
+    const website = new FormData(e.currentTarget).get('website') ?? ''
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, website }),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      setStatus('sent')
+      setFormData({ name: '', email: '', phone: '', message: '' })
+    } catch {
+      setStatus('error')
+    }
   }
 
   const handleChange = (
@@ -55,7 +67,7 @@ export default function Contact() {
       icon: <MapPin className="h-6 w-6" />,
       label: 'Address',
       value: 'AV Abel Baptista esquina com avenida Samora MACHEL, Talhão número 374A, Loja número 3, Maputo',
-      link: '#',
+      link: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Av. Abel Baptista & Av. Samora Machel, Maputo, Mozambique'),
     },
     {
       icon: <Phone className="h-6 w-6" />,
@@ -102,6 +114,7 @@ export default function Contact() {
                 <a
                   key={info.label}
                   href={info.link}
+                  {...(info.link.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   className="flex items-start space-x-4 p-4 rounded-lg bg-gray-900 hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 group"
                   style={{
                     animationDelay: `${index * 100}ms`,
@@ -214,11 +227,22 @@ export default function Contact() {
                 />
               </div>
 
+              {/* Honeypot: hidden from people, bots fill it in */}
+              <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
+
+              {status === 'sent' && (
+                <p role="status" className="text-green-400">Thank you! Your message was received and our team will be in touch soon.</p>
+              )}
+              {status === 'error' && (
+                <p role="alert" className="text-red-400">Sorry, your message could not be sent. Please email sales@africait.co.mz or call +258 859232670.</p>
+              )}
+
               <button
                 type="submit"
-                className="w-full px-6 py-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
+                disabled={status === 'sending'}
+                className="disabled:opacity-60 w-full px-6 py-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
               >
-                <span>Send Message</span>
+                <span>{status === 'sending' ? 'Sending…' : 'Send Message'}</span>
                 <Send className="h-5 w-5" />
               </button>
             </form>

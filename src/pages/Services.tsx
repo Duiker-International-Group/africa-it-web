@@ -8,15 +8,15 @@ import {
   Satellite,
   ArrowRight,
 } from 'lucide-react'
-import networkingImg from '../assets/Networking-IT-Infrastructure.jpg'
-import appDevImg from '../assets/app-development.jpg'
-import itInfraImg from '../assets/it-infrastructure.jpeg'
+import networkingImg from '../assets/Networking-IT-Infrastructure.webp'
+import appDevImg from '../assets/app-development.webp'
+import itInfraImg from '../assets/it-infrastructure.webp'
 import trainingImg from '../assets/training-programs.webp'
 import starlinkMainImg from '../assets/241002-starlink-vl-1242p-d76b6d.webp'
 import starlinkOutdoorImg from '../assets/IMG_1585-2.avif'
-import starlinkRoamImg from '../assets/spacex_gives_discounted_starlink_roam_a_spin_in_canada_edited_1761742300.png'
-import starlinkKenyaImg from '../assets/Starlink-Mobile-Regional-roaming-subcription-fees-in-Kenya-1.jpg'
-import starlinkYuhImg from '../assets/starlink-yuh.jpg'
+import starlinkRoamImg from '../assets/spacex_gives_discounted_starlink_roam_a_spin_in_canada_edited_1761742300.webp'
+import starlinkKenyaImg from '../assets/Starlink-Mobile-Regional-roaming-subcription-fees-in-Kenya-1.webp'
+import starlinkYuhImg from '../assets/starlink-yuh.webp'
 
 interface Service {
   icon: React.ReactNode

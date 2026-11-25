@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ChevronDown } from 'lucide-react'
-import starlinkFaqImg from '../assets/starlink-yuh.jpg'
+import starlinkFaqImg from '../assets/starlink-yuh.webp'
 
 interface FAQItem {
   question: string

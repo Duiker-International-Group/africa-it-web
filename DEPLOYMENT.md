@@ -1,40 +1,37 @@
-# Netlify Deployment Guide
+# Deployment — Cloudflare Workers
 
-## Deployment Steps
+The site runs as one Cloudflare Worker (`africait-web`) with static assets, on
+`africait.co.mz` and `www.africait.co.mz`. Config lives in `cloudflare.config.ts`
+and is deployed with the `cf` CLI (no Wrangler config).
 
-1. **Connect Repository to Netlify**
-   - Go to [Netlify](https://app.netlify.com)
-   - Click "Add new site" → "Import an existing project"
-   - Connect to GitHub and select the repository: `Africa-IT-Solutions/website`
+## How it works
 
-2. **Build Settings**
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-   - These are already configured in `netlify.toml`
+- Static files (the Vite build) are served directly by Cloudflare's asset layer —
+  these requests are free and don't invoke the Worker.
+- Unknown paths fall back to `index.html` (`notFoundHandling: single-page-application`),
+  and React Router shows its 404 page.
+- Only `/api/*` runs Worker code (`runWorkerFirst`). `/api/contact` validates the
+  form, drops bot submissions (honeypot field), and stores messages in the
+  D1 database `africait-contact` (table `contact_messages`).
 
-3. **Environment Variables**
-   - No environment variables required for this project
+## Requirements
 
-4. **Deploy**
-   - Netlify will automatically deploy on every push to the `main` branch
-   - Or click "Deploy site" to deploy immediately
+- Node.js 22.18+ (Node 25 works; 22.20 hit a module-loader bug with the Vite plugin)
+- `npx cf auth login` once per machine
 
-## Configuration Files
+## Commands
 
-- `netlify.toml` - Netlify configuration with redirects and headers
-- `public/_redirects` - SPA routing support
-- `vite.config.ts` - Vite build configuration
+```bash
+npm run dev          # local dev (Worker + local D1)
+npm run deploy       # type-check, build and deploy
+npm run db:migrate   # apply migrations/ to the production D1 database
+```
 
-## Fixes Applied
+## Reading contact form messages
 
-- ✅ Fixed MIME type issues for JavaScript modules
-- ✅ Added proper Content-Type headers
-- ✅ Fixed favicon 404 error
-- ✅ Optimized parallax effect with `requestAnimationFrame` and `translate3d`
-- ✅ Added SPA routing redirects
+```bash
+npx cf d1 query b0e1de90-388a-44cc-8a13-bff2fad691c8 --sql "SELECT created_at, name, email, phone, message FROM contact_messages ORDER BY id DESC LIMIT 50"
+```
 
-## Build Verification
-
-Run `npm run build` locally to verify the build works before deploying.
-
-
+Email notification is not wired up yet: the zone has no MX records, so
+`sales@` / `starlink@africait.co.mz` cannot receive mail today.
