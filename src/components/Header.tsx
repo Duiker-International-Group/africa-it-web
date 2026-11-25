@@ -83,7 +83,8 @@ export default function Header() {
   return (
     <header
       className={`on-ink fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ${
-        solid ? 'bg-ink/92 shadow-[0_1px_0_rgba(201,210,222,.12)] backdrop-blur-md' : 'bg-transparent'
+        // No backdrop-filter while the menu is open: it would trap the fixed menu panel inside the bar.
+        open ? 'bg-ink' : solid ? 'bg-ink/92 shadow-[0_1px_0_rgba(201,210,222,.12)] backdrop-blur-md' : 'bg-transparent'
       }`}
     >
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-control focus:bg-white focus:px-4 focus:py-2 focus:text-ink">
@@ -117,9 +118,9 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <LangSwitch className="text-mist hover:text-white" />
-          <Button href={COMPANY.whatsappHref} className="hidden sm:inline-flex">
-            {t.cta}
-          </Button>
+          <span className="hidden sm:block">
+            <Button href={COMPANY.whatsappHref}>{t.cta}</Button>
+          </span>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}

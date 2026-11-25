@@ -58,7 +58,7 @@ export default function HomeHero() {
         <img
           src={dishImg}
           alt={t.imgAlt}
-          className="h-full w-full object-cover object-[70%_60%]"
+          className="h-full w-full -scale-x-100 object-cover object-[38%_40%]"
           fetchPriority="high"
           decoding="async"
         />
@@ -69,8 +69,8 @@ export default function HomeHero() {
         className="absolute inset-0 -z-10"
         style={{
           background:
-            'linear-gradient(90deg, rgba(15,30,51,.96) 0%, rgba(15,30,51,.86) 38%, rgba(15,30,51,.35) 72%, rgba(15,30,51,.2) 100%),' +
-            'linear-gradient(0deg, rgba(15,30,51,1) 0%, rgba(15,30,51,0) 38%)',
+            'linear-gradient(90deg, rgba(15,30,51,.94) 0%, rgba(15,30,51,.78) 34%, rgba(15,30,51,.18) 66%, rgba(15,30,51,0) 100%),' +
+            'linear-gradient(0deg, rgba(15,30,51,1) 0%, rgba(15,30,51,.6) 22%, rgba(15,30,51,0) 45%)',
         }}
       />
 

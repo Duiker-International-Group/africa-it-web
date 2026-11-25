@@ -1,156 +1,245 @@
-import { useEffect, useRef } from 'react'
-import { MapPin, Users, Award, Target } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import PageIntro from '../components/ui/PageIntro'
+import Button from '../components/ui/Button'
+import Reveal from '../components/ui/Reveal'
+import { COMPANY } from '../content/company'
+import { useCopy, useLang, useSeo, useTo } from '../i18n'
 import networkSecurityImg from '../assets/network-security.webp'
 
-const stats = [
-  { icon: <MapPin className="h-8 w-8" />, label: 'Location', value: 'Maputo, Mozambique' },
-  { icon: <Users className="h-8 w-8" />, label: 'Expert Team', value: '18+' },
-  { icon: <Award className="h-8 w-8" />, label: 'Projects Completed', value: '50+' },
-  { icon: <Target className="h-8 w-8" />, label: 'Years Experience', value: '2+' },
-]
+const copy = {
+  pt: {
+    seo: {
+      title: 'Sobre a Africa IT Solutions',
+      description:
+        'Empresa de TI sediada em Maputo e revendedora autorizada Starlink. Conheça a equipa, a forma como trabalhamos e onde nos encontrar.',
+    },
+    title: 'Sobre nós',
+    intro:
+      'A Africa IT Solutions é uma empresa de tecnologia sediada em Maputo e revendedora autorizada Starlink. Instalamos internet por satélite e tratamos de redes, software, equipamento e formação para empresas e famílias em todo o país.',
+    imageAlt: 'Equipamento de rede e segurança instalado num bastidor',
+    story: {
+      statement:
+        'Queremos que as empresas moçambicanas trabalhem melhor com a tecnologia certa, bem instalada e com apoio de quem conhece o terreno.',
+      p1: 'A nossa equipa reúne competência técnica e experiência prática. Ouvimos o problema, recomendamos a solução que faz sentido e montamo-la até funcionar.',
+      p2: 'Conhecemos a realidade local e seguimos boas práticas internacionais. Assim, o que entregamos serve hoje e continua a servir amanhã.',
+    },
+    facts: {
+      items: [
+        { value: '2+', label: 'anos de atividade' },
+        { value: '50+', label: 'projetos concluídos' },
+        { value: '18+', label: 'pessoas na equipa' },
+      ],
+    },
+    values: {
+      title: 'Como trabalhamos',
+      items: [
+        {
+          title: 'Primeiro ouvimos',
+          text: 'Antes de propor seja o que for, percebemos o que o seu negócio ou a sua casa precisam.',
+        },
+        {
+          title: 'Recomendamos o que serve',
+          text: 'Indicamos a solução adequada ao seu caso, não a mais cara nem a mais complicada.',
+        },
+        {
+          title: 'Instalamos e deixamos a funcionar',
+          text: 'O trabalho só termina quando a ligação, a rede ou o sistema estão a funcionar como combinado.',
+        },
+        {
+          title: 'Ficamos ao seu lado',
+          text: 'Depois da entrega, continuamos disponíveis para suporte e manutenção, pelo telefone ou no local.',
+        },
+      ],
+    },
+    where: {
+      title: 'Onde trabalhamos',
+      text: 'A nossa loja fica em Maputo. A partir daqui, atendemos clientes em todo o território moçambicano.',
+      addressLabel: 'Morada',
+      hoursLabel: 'Horário',
+      mapLink: 'Ver no mapa',
+    },
+    cta: {
+      title: 'Vamos falar do seu projeto',
+      text: 'Conte-nos o que precisa e respondemos com uma proposta clara. Para Starlink, confirmamos o preço atual do kit e as opções de plano.',
+      primary: 'Pedir orçamento',
+      whatsapp: 'Falar no WhatsApp',
+    },
+  },
+  en: {
+    seo: {
+      title: 'About Africa IT Solutions',
+      description:
+        'A Maputo-based IT company and Authorised Starlink Retailer. Meet the team, see how we work and find out where to visit us.',
+    },
+    title: 'About us',
+    intro:
+      'Africa IT Solutions is a technology company based in Maputo and an Authorised Starlink Retailer. We install satellite internet and handle networks, software, hardware and training for businesses and households across Mozambique.',
+    imageAlt: 'Network and security equipment installed in a rack',
+    story: {
+      statement:
+        'We want Mozambican businesses to work better with the right technology, properly installed and backed by people who know the ground.',
+      p1: 'Our team combines technical skill with hands-on experience. We listen to the problem, recommend the solution that makes sense and set it up until it works.',
+      p2: 'We understand local conditions and follow international best practice. What we deliver serves you today and keeps serving you tomorrow.',
+    },
+    facts: {
+      items: [
+        { value: '2+', label: 'years in operation' },
+        { value: '50+', label: 'projects completed' },
+        { value: '18+', label: 'people on the team' },
+      ],
+    },
+    values: {
+      title: 'How we work',
+      items: [
+        {
+          title: 'We listen first',
+          text: 'Before proposing anything, we find out what your business or home actually needs.',
+        },
+        {
+          title: 'We recommend what fits',
+          text: 'We suggest the solution that suits your case, not the dearest or the most complicated.',
+        },
+        {
+          title: 'We install it and make it work',
+          text: 'The job is only done when the connection, network or system works as agreed.',
+        },
+        {
+          title: 'We stay available',
+          text: 'After handover we remain on hand for support and maintenance, by phone or on site.',
+        },
+      ],
+    },
+    where: {
+      title: 'Where we work',
+      text: 'Our shop is in Maputo. From here we serve clients across Mozambique.',
+      addressLabel: 'Address',
+      hoursLabel: 'Opening hours',
+      mapLink: 'View on map',
+    },
+    cta: {
+      title: 'Let us talk about your project',
+      text: 'Tell us what you need and we will reply with a clear proposal. For Starlink, we confirm the current kit price and plan options.',
+      primary: 'Request a quote',
+      whatsapp: 'Chat on WhatsApp',
+    },
+  },
+}
 
 export default function About() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
-  const statsRefs = useRef<(HTMLDivElement | null)[]>([])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up')
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    if (contentRef.current) observer.observe(contentRef.current)
-    statsRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref)
-    })
-
-    return () => observer.disconnect()
-  }, [])
+  const t = useCopy(copy)
+  const lang = useLang()
+  const to = useTo()
+  useSeo({ pt: copy.pt.seo, en: copy.en.seo })
 
   return (
-    <section
-      ref={sectionRef}
-      className="py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-gray-100 via-gray-50 to-white"
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 opacity-0 animate-fade-in">
-          <p className="text-sm font-semibold uppercase tracking-wider text-gray-600 mb-2">Authorised Starlink Retailer</p>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
-            Your Trusted Technology Partner in Mozambique
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-            Africa IT Solutions is an Authorised Starlink Retailer and a Mozambican-based IT service provider headquartered in Maputo. We lead with Starlink satellite internet, then networking, software, hardware, and training. With years of experience serving businesses across multiple sectors, we deliver dependable, scalable, and forward-thinking technology solutions tailored to local and regional needs.
-          </p>
-          <div className="w-24 h-1 bg-black mx-auto mt-6" />
-        </div>
+    <>
+      <PageIntro
+        title={t.title}
+        intro={t.intro}
+        aside={
+          <div className="aspect-[4/3] overflow-hidden rounded-media">
+            <img
+              src={networkSecurityImg}
+              alt={t.imageAlt}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+          </div>
+        }
+      />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
-          <div
-            ref={contentRef}
-            className="space-y-6 opacity-0"
-          >
-            <h2 className="text-2xl sm:text-3xl font-bold text-black">
-              Leading IT Solutions Provider
-            </h2>
-            <p className="text-gray-700 leading-relaxed text-lg">
-              Our team of experienced professionals brings technical expertise, strategic insight, and a passion for innovation to every engagement. We partner with you to understand your challenges, recommend the right solutions, and implement systems that deliver long-term value.
-            </p>
-            <p className="text-gray-700 leading-relaxed text-lg">
-              At Africa IT Solutions, we combine localized understanding with global-standard technology practices to deliver outcomes that matter.
-            </p>
+      <section className="bg-white py-20 sm:py-28 lg:py-32">
+        <div className="container-site">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <Reveal className="lg:col-span-7">
+              <p className="t-h2 max-w-[28ch] text-ink">{t.story.statement}</p>
+            </Reveal>
+            <div className="space-y-5 lg:col-span-5">
+              <p className="measure">{t.story.p1}</p>
+              <p className="measure">{t.story.p2}</p>
+            </div>
           </div>
 
-          <div className="relative">
-            <div className="relative rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 shadow-2xl">
-              <img
-                src={networkSecurityImg}
-                alt="Network Security"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black/80 backdrop-blur-sm">
-                <div className="p-8 sm:p-12 space-y-8">
-                  <div>
-                    <h3 className="text-white text-xl font-semibold mb-4">
-                      Our Mission
-                    </h3>
-                    <p className="text-gray-300 leading-relaxed">
-                      To empower African businesses with innovative technology solutions that enhance productivity, streamline operations, and strengthen competitive advantage.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-white text-xl font-semibold mb-4">
-                      Our Vision
-                    </h3>
-                    <p className="text-gray-300 leading-relaxed">
-                      To be the leading IT solutions provider in Africa, recognized for excellence, innovation, and unwavering commitment to client success.
-                    </p>
-                  </div>
-                </div>
+          <dl className="mt-16 grid gap-x-8 gap-y-8 sm:mt-20 sm:grid-cols-3">
+            {t.facts.items.map((item) => (
+              <div key={item.label} className="flex flex-col-reverse border-t border-mist/60 pt-5">
+                <dt className="mt-1 text-slate">{item.label}</dt>
+                <dd className="font-display text-3xl font-semibold text-ink">{item.value}</dd>
               </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <section className="py-20 sm:py-28 lg:py-32">
+        <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-16">
+          <h2 className="t-h2 lg:col-span-4">{t.values.title}</h2>
+          <dl className="grid gap-x-12 sm:grid-cols-2 lg:col-span-8">
+            {t.values.items.map((item) => (
+              <div key={item.title} className="border-t border-mist/60 py-6">
+                <dt className="t-h3 text-ink">{item.title}</dt>
+                <dd className="mt-2">{item.text}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <section className="bg-white py-20 sm:py-28 lg:py-32">
+        <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5">
+            <h2 className="t-h2">{t.where.title}</h2>
+            <p className="measure mt-5">{t.where.text}</p>
+          </div>
+          <div className="space-y-10 lg:col-span-6 lg:col-start-7">
+            <dl>
+              <div className="border-t border-mist/60 py-5">
+                <dt className="font-display font-semibold text-ink">{t.where.addressLabel}</dt>
+                <dd className="mt-1">
+                  <address className="not-italic">{COMPANY.address[lang]}</address>
+                  <a
+                    href={COMPANY.mapsHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link mt-2 inline-block"
+                  >
+                    {t.where.mapLink}
+                  </a>
+                </dd>
+              </div>
+            </dl>
+            <div>
+              <h3 className="t-h3">{t.where.hoursLabel}</h3>
+              <dl className="mt-3">
+                {COMPANY.hours[lang].map(([day, time]) => (
+                  <div
+                    key={day}
+                    className="flex justify-between gap-6 border-t border-mist/60 py-3"
+                  >
+                    <dt>{day}</dt>
+                    <dd className="font-medium text-ink">{time}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Stats Grid */}
-        <div className="mt-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-8">
-            Our Capabilities at a Glance
-          </h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {stats.map((stat, index) => (
-              <div
-                key={stat.label}
-                ref={(el) => {
-                  statsRefs.current[index] = el
-                }}
-                className="bg-white p-6 rounded-xl border border-gray-200 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-xl opacity-0"
-              >
-                <div className="flex justify-center mb-4 text-black">
-                  {stat.icon}
-                </div>
-                <div className="text-3xl sm:text-4xl font-bold text-black mb-2">
-                  {stat.value}
-                </div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
-              </div>
-            ))}
+      <section className="on-ink py-20 sm:py-28 lg:py-32">
+        <div className="container-site grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <h2 className="t-h2">{t.cta.title}</h2>
+            <p className="t-lede measure mt-4">{t.cta.text}</p>
+          </div>
+          <div className="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
+            <Button to={to('contact')}>{t.cta.primary}</Button>
+            <Button href={COMPANY.whatsappHref} variant="onInk">
+              {t.cta.whatsapp}
+            </Button>
           </div>
         </div>
-
-        {/* CTA Section */}
-        <div className="mt-20 text-center bg-gradient-to-r from-gray-900 to-black rounded-xl p-12 text-white">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Partner With Us Today
-          </h2>
-          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Experience the difference that expert IT solutions can make for your business. Let's work together to achieve your technology goals.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/contact"
-              className="px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-lg"
-            >
-              Get In Touch
-            </Link>
-            <Link
-              to="/services"
-              className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105"
-            >
-              View Our Services
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
-

@@ -1,480 +1,282 @@
-import { useEffect, useRef } from 'react'
-import { ChevronDown, Network, Code, Server, GraduationCap, Satellite, ArrowRight, Shield, Zap, Users, Award } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import itInfraImg from '../assets/it-infrastructure.webp'
-import networkingImg from '../assets/Networking-IT-Infrastructure.webp'
-import appDevImg from '../assets/app-development.webp'
-import trainingImg from '../assets/training-programs.webp'
-import networkSecurityImg from '../assets/network-security.webp'
-import networkDesignImg from '../assets/network-design-2.webp'
-import starlinkHeroImg from '../assets/241002-starlink-vl-1242p-d76b6d.webp'
-import starlinkCardImg from '../assets/IMG_1585-2.avif'
+import HomeHero from '../components/HomeHero'
+import Button from '../components/ui/Button'
+import Reveal from '../components/ui/Reveal'
+import { useCopy, useSeo, useTo } from '../i18n'
+import { COMPANY } from '../content/company'
+import starlinkImg from '../assets/IMG_1585-2.avif'
 
-const services = [
-  {
-    icon: <Satellite className="h-8 w-8" />,
-    title: 'Starlink Hardware & Services',
-    description: 'Africa IT Solutions is an Authorised Starlink Retailer. High-speed satellite internet with professional installation and local support.',
-    image: starlinkCardImg,
-    link: '/services#starlink',
+const copy = {
+  pt: {
+    seo: {
+      title: 'Starlink e serviços de TI em Maputo | Africa IT Solutions',
+      description:
+        'Revendedor autorizado Starlink em Maputo. Kit, instalação e suporte, mais redes, software, equipamento informático e formação para empresas em Moçambique.',
+    },
+    starlink: {
+      title: 'Starlink para onde a fibra não chega',
+      body: 'Fornecemos o kit original, instalamos no local e ficamos disponíveis para suporte. Confirmamos consigo o preço atual do kit e as opções de plano antes de avançar.',
+      who: [
+        ['Casas', 'Internet estável para a família, o teletrabalho e as aulas.'],
+        ['Escritórios', 'Uma ligação de reserva quando a rede principal falha.'],
+        ['Lodges', 'Wi-Fi para os hóspedes, mesmo longe de tudo.'],
+        ['Machambas e quintas', 'Cobertura em campo aberto, sem depender de torres.'],
+        ['ONG', 'Ligação rápida para equipas em projetos no terreno.'],
+        ['Minas e obras', 'Internet em locais remotos e temporários.'],
+        ['Viaturas e embarcações', 'Starlink Mini, leve e fácil de levar consigo.'],
+      ],
+      primary: 'Pedir Starlink',
+      secondary: 'Ver como funciona',
+      imgAlt: 'Técnico a instalar uma antena Starlink no telhado de um edifício',
+    },
+    more: {
+      title: 'E o resto da tecnologia da sua empresa',
+      intro: 'A mesma equipa trata da rede, do software, do equipamento e da formação.',
+      more: 'Saber mais',
+      items: [
+        {
+          id: 'redes',
+          name: 'Redes e infraestrutura',
+          text: 'Desenho, cablagem, Wi-Fi, firewalls e segurança de rede para escritórios e armazéns.',
+          aria: 'Saber mais sobre redes e infraestrutura',
+        },
+        {
+          id: 'software',
+          name: 'Desenvolvimento de software',
+          text: 'Sites, aplicações móveis e sistemas de gestão feitos à medida do seu negócio.',
+          aria: 'Saber mais sobre desenvolvimento de software',
+        },
+        {
+          id: 'equipamento',
+          name: 'Equipamento e suporte',
+          text: 'Computadores, servidores e periféricos, com manutenção e assistência técnica.',
+          aria: 'Saber mais sobre equipamento e suporte',
+        },
+        {
+          id: 'formacao',
+          name: 'Formação em TI',
+          text: 'Cursos para equipas e preparação para certificações.',
+          aria: 'Saber mais sobre formação em TI',
+        },
+      ],
+    },
+    why: {
+      title: 'Uma equipa em Maputo que fica depois da instalação',
+      body: 'Quando a internet falha às oito da manhã, é útil falar com alguém que está na mesma cidade e fala a sua língua.',
+      facts: 'Mais de 50 projetos concluídos por uma equipa de mais de 18 pessoas, em mais de 2 anos de atividade.',
+      reasons: [
+        ['Equipa local', 'Estamos em Maputo e atendemos em português.'],
+        ['Equipamento autorizado', 'Revendedor autorizado Starlink, com equipamento original e garantia.'],
+        ['Instalamos e acompanhamos', 'Não entregamos uma caixa e desaparecemos. Voltamos quando é preciso.'],
+        ['Um só parceiro', 'Internet, rede e equipamento tratados por quem já conhece o seu local.'],
+      ],
+    },
+    cta: {
+      title: 'Diga-nos onde está e o que precisa',
+      body: 'Respondemos normalmente no mesmo dia útil, com uma proposta clara.',
+      whatsapp: 'Falar no WhatsApp',
+      phone: 'Ligar',
+      phoneLabel: 'Ligar para',
+      form: 'Prefere escrever? Use o formulário de contacto.',
+    },
   },
-  {
-    icon: <Network className="h-8 w-8" />,
-    title: 'Networking Solutions',
-    description: 'Design, deploy, and manage network systems that form the backbone of your digital operations.',
-    image: networkingImg,
-    link: '/services',
+  en: {
+    seo: {
+      title: 'Starlink and IT services in Maputo | Africa IT Solutions',
+      description:
+        'Authorised Starlink retailer in Maputo. Kit, installation and support, plus networking, software, hardware and IT training for businesses across Mozambique.',
+    },
+    starlink: {
+      title: 'Starlink for places the fibre does not reach',
+      body: 'We supply the genuine kit, install it on site and stay on call for support. We confirm the current kit price and plan options with you before you commit.',
+      who: [
+        ['Homes', 'Steady internet for the family, remote work and school.'],
+        ['Offices', 'A backup connection for when the main line goes down.'],
+        ['Lodges', 'Guest Wi-Fi, even far from everything.'],
+        ['Farms and machambas', 'Coverage in open country, no towers needed.'],
+        ['NGOs', 'Fast connections for teams on field projects.'],
+        ['Mines and building sites', 'Internet in remote and temporary locations.'],
+        ['Vehicles and boats', 'Starlink Mini, light and easy to take along.'],
+      ],
+      primary: 'Get Starlink',
+      secondary: 'See how it works',
+      imgAlt: 'Technician setting up a Starlink dish on a building roof',
+    },
+    more: {
+      title: 'And the rest of your business technology',
+      intro: 'The same team looks after your network, software, hardware and training.',
+      more: 'Learn more',
+      items: [
+        {
+          id: 'redes',
+          name: 'Networking and infrastructure',
+          text: 'Design, cabling, Wi-Fi, firewalls and network security for offices and warehouses.',
+          aria: 'Learn more about networking and infrastructure',
+        },
+        {
+          id: 'software',
+          name: 'Software development',
+          text: 'Websites, mobile apps and business systems built around how you work.',
+          aria: 'Learn more about software development',
+        },
+        {
+          id: 'equipamento',
+          name: 'Hardware and support',
+          text: 'Computers, servers and peripherals, with maintenance and technical support.',
+          aria: 'Learn more about hardware and support',
+        },
+        {
+          id: 'formacao',
+          name: 'IT training',
+          text: 'Courses for your staff and preparation for certifications.',
+          aria: 'Learn more about IT training',
+        },
+      ],
+    },
+    why: {
+      title: 'A team in Maputo that stays after the install',
+      body: 'When the internet drops at eight in the morning, it helps to talk to someone in the same city who speaks your language.',
+      facts: 'More than 50 projects delivered by a team of more than 18 people, over more than 2 years of work.',
+      reasons: [
+        ['A local team', 'We are based in Maputo and answer in Portuguese.'],
+        ['Authorised equipment', 'Authorised Starlink retailer, with genuine equipment and warranty.'],
+        ['We install and we stay', 'We do not hand over a box and disappear. We come back when needed.'],
+        ['One partner', 'Internet, network and devices handled by people who already know your site.'],
+      ],
+    },
+    cta: {
+      title: 'Tell us where you are and what you need',
+      body: 'We usually reply the same working day, with a clear proposal.',
+      whatsapp: 'Chat on WhatsApp',
+      phone: 'Call',
+      phoneLabel: 'Call',
+      form: 'Prefer to write? Use the contact form.',
+    },
   },
-  {
-    icon: <Code className="h-8 w-8" />,
-    title: 'Software Development',
-    description: 'Custom software that accelerates processes and unlocks new business value.',
-    image: appDevImg,
-    link: '/services',
-  },
-  {
-    icon: <Server className="h-8 w-8" />,
-    title: 'Hardware Sales & Support',
-    description: 'Quality hardware solutions backed by comprehensive support services.',
-    image: itInfraImg,
-    link: '/services',
-  },
-  {
-    icon: <GraduationCap className="h-8 w-8" />,
-    title: 'IT Training',
-    description: 'Professional training programs to elevate technical knowledge and productivity.',
-    image: trainingImg,
-    link: '/services',
-  },
-]
-
-const benefits = [
-  {
-    icon: <Shield className="h-6 w-6" />,
-    title: 'Secure & Reliable',
-    description: 'Enterprise-grade security and 24/7 monitoring to protect your business.',
-  },
-  {
-    icon: <Zap className="h-6 w-6" />,
-    title: 'Fast Implementation',
-    description: 'Rapid deployment and seamless integration with your existing systems.',
-  },
-  {
-    icon: <Users className="h-6 w-6" />,
-    title: 'Expert Team',
-    description: '18+ experienced professionals with 2+ years of industry expertise.',
-  },
-  {
-    icon: <Award className="h-6 w-6" />,
-    title: 'Proven Track Record',
-    description: '50+ successful projects completed for businesses across Mozambique.',
-  },
-]
-
-const stats = [
-  { value: '2+', label: 'Years Experience' },
-  { value: '50+', label: 'Projects Completed' },
-  { value: '18+', label: 'Expert Team Members' },
-  { value: '100%', label: 'Client Satisfaction' },
-]
+}
 
 export default function Home() {
-  const heroRef = useRef<HTMLDivElement>(null)
-  const servicesRef = useRef<HTMLDivElement>(null)
-  const benefitsRef = useRef<HTMLDivElement>(null)
-  const statsRef = useRef<HTMLDivElement>(null)
-  const heroBgRef = useRef<HTMLDivElement>(null)
-  const servicesBgRef = useRef<HTMLDivElement>(null)
-  const benefitsBgRef = useRef<HTMLDivElement>(null)
-  const statsBgRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in')
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-
-    const refs = [heroRef, servicesRef, benefitsRef, statsRef]
-    refs.forEach((ref) => {
-      if (ref.current) observer.observe(ref.current)
-    })
-
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    let ticking = false
-
-    const updateParallax = () => {
-      const scrollY = window.scrollY
-
-      // Hero section parallax
-      if (heroBgRef.current) {
-        const heroOffset = scrollY * 0.5
-        heroBgRef.current.style.transform = `translate3d(0, ${heroOffset}px, 0)`
-      }
-
-      // Services section parallax
-      if (servicesBgRef.current && servicesRef.current) {
-        const rect = servicesRef.current.getBoundingClientRect()
-        const sectionTop = rect.top + scrollY
-        const scrollProgress = (scrollY - sectionTop + window.innerHeight) / (rect.height + window.innerHeight)
-        
-        if (scrollProgress > -0.2 && scrollProgress < 1.2) {
-          const parallaxOffset = (scrollY - sectionTop) * 0.3
-          servicesBgRef.current.style.transform = `translate3d(0, ${parallaxOffset}px, 0)`
-        }
-      }
-
-      // Benefits section parallax
-      if (benefitsBgRef.current && benefitsRef.current) {
-        const rect = benefitsRef.current.getBoundingClientRect()
-        const sectionTop = rect.top + scrollY
-        const scrollProgress = (scrollY - sectionTop + window.innerHeight) / (rect.height + window.innerHeight)
-        
-        if (scrollProgress > -0.2 && scrollProgress < 1.2) {
-          const parallaxOffset = (scrollY - sectionTop) * 0.3
-          benefitsBgRef.current.style.transform = `translate3d(0, ${parallaxOffset}px, 0)`
-        }
-      }
-
-      // Stats section parallax
-      if (statsBgRef.current && statsRef.current) {
-        const rect = statsRef.current.getBoundingClientRect()
-        const sectionTop = rect.top + scrollY
-        const scrollProgress = (scrollY - sectionTop + window.innerHeight) / (rect.height + window.innerHeight)
-        
-        if (scrollProgress > -0.2 && scrollProgress < 1.2) {
-          const parallaxOffset = (scrollY - sectionTop) * 0.3
-          statsBgRef.current.style.transform = `translate3d(0, ${parallaxOffset}px, 0)`
-        }
-      }
-
-      ticking = false
-    }
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateParallax)
-        ticking = true
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    updateParallax() // Initial call
-
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  const t = useCopy(copy)
+  const to = useTo()
+  useSeo({ pt: copy.pt.seo, en: copy.en.seo })
 
   return (
-    <div>
-      {/* Hero Section */}
-      <section
-        ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden pb-24"
-      >
-        {/* Background Image */}
-        <div className="absolute inset-0 overflow-hidden z-0">
-          <div
-            ref={heroBgRef}
-            className="absolute inset-0 will-change-transform z-0"
-            style={{ transform: 'translate3d(0, 0, 0)' }}
-          >
-            <img
-              src={starlinkHeroImg}
-              alt="Starlink satellite internet"
-              className="w-full h-full object-cover opacity-30"
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-gray-900/70 to-black/80 z-0" />
-        </div>
+    <>
+      <HomeHero />
 
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 opacity-20 z-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gray-500 rounded-full blur-3xl animate-pulse delay-1000" />
-        </div>
-
-        {/* Grid Pattern Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0" />
-
-        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 text-center pt-24 sm:pt-28">
-          <div className="space-y-6 sm:space-y-8">
-            <p className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-semibold uppercase tracking-wider opacity-0 animate-slide-up">
-              Authorised Starlink Retailer
-            </p>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
-              <span className="block opacity-0 animate-slide-up">Empowering</span>
-              <span className="block mt-2 opacity-0 animate-slide-up delay-200">
-                African Businesses
-              </span>
-              <span className="block mt-2 text-gray-400 opacity-0 animate-slide-up delay-400">
-                Through Technology
-              </span>
-            </h1>
-
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto opacity-0 animate-slide-up delay-600">
-              Africa IT Solutions is an Authorised Starlink Retailer in Africa. We deliver high-speed satellite internet, professional installation, and local support—alongside networking, software, hardware, and IT training. Based in Maputo, Mozambique, we are your trusted technology partner.
-            </p>
-
-            <p className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto opacity-0 animate-slide-up delay-700">
-              Get Starlink hardware at official pricing with immediate availability. Pay with cash or mobile money. From remote locations to enterprise connectivity, we help you stay connected.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8 opacity-0 animate-slide-up delay-800">
-              <Link
-                to="/services#starlink"
-                className="px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-              >
-                Get Starlink
-              </Link>
-              <Link
-                to="/contact"
-                className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105"
-              >
-                Get In Touch
-              </Link>
+      {/* Starlink */}
+      <section className="bg-white py-20 sm:py-28 lg:py-32">
+        <div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="lg:col-span-5">
+            <div className="aspect-[4/5] overflow-hidden rounded-media bg-fog">
+              <img
+                src={starlinkImg}
+                alt={t.starlink.imgAlt}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
             </div>
-          </div>
-        </div>
+          </Reveal>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce z-20">
-          <a
-            href="#services-preview"
-            onClick={(e) => {
-              e.preventDefault()
-              const element = document.getElementById('services-preview')
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' })
-              }
-            }}
-            className="text-white hover:text-gray-300 transition-colors cursor-pointer"
-            aria-label="Scroll to services"
-          >
-            <ChevronDown className="h-8 w-8" />
-          </a>
-        </div>
-      </section>
+          <div className="lg:col-start-7 lg:col-span-6">
+            <h2 className="t-h1 text-ink">{t.starlink.title}</h2>
+            <p className="t-lede measure mt-5">{t.starlink.body}</p>
 
-      {/* Stats Section */}
-      <section ref={statsRef} className="relative py-16 bg-black text-white overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 overflow-hidden z-0">
-          <div
-            ref={statsBgRef}
-            className="absolute inset-0 will-change-transform z-0"
-            style={{ transform: 'translate3d(0, 0, 0)' }}
-          >
-            <img
-              src={networkDesignImg}
-              alt="Network Design"
-              className="w-full h-full object-cover opacity-20"
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-black/80 to-black/90 z-0" />
-        </div>
-        
-        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="text-center transform hover:scale-105 transition-transform duration-300"
-              >
-                <div className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-2 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                  {stat.value}
+            <dl className="mt-10 grid border-t border-mist/60 sm:grid-cols-2 sm:gap-x-10">
+              {t.starlink.who.map(([name, detail]) => (
+                <div key={name} className="border-b border-mist/60 py-4">
+                  <dt className="font-display text-lg font-semibold text-ink">{name}</dt>
+                  <dd className="mt-1 text-sm">{detail}</dd>
                 </div>
-                <div className="text-gray-400 font-medium">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              ))}
+            </dl>
 
-      {/* Services Preview Section */}
-      <section id="services-preview" ref={servicesRef} className="relative py-20 sm:py-24 lg:py-32 overflow-hidden bg-white">
-        {/* Background Image with Parallax */}
-        <div className="absolute inset-0 overflow-hidden z-0">
-          <div
-            ref={servicesBgRef}
-            className="absolute inset-0 will-change-transform z-0"
-            style={{ transform: 'translate3d(0, 0, 0)' }}
-          >
-            <img
-              src={itInfraImg}
-              alt="IT Infrastructure"
-              className="w-full h-full object-cover opacity-50"
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-white/40 to-white/60 z-0" />
-        </div>
-        
-        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <p className="text-sm font-semibold uppercase tracking-wider text-gray-600 mb-2">
-              Authorised Starlink Retailer
-            </p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
-              Our Comprehensive IT Services
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-              Starlink hardware and connectivity lead our offering—followed by networking, software development, hardware support, and IT training. End-to-end solutions tailored to your needs.
-            </p>
-            <div className="w-24 h-1 bg-black mx-auto mt-6" />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-            {services.map((service) => (
-              <Link
-                key={service.title}
-                to={service.link}
-                className="group relative bg-white rounded-lg overflow-hidden border border-gray-200 hover:border-gray-400 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  <div className="absolute top-4 left-4 p-3 bg-black/80 backdrop-blur-sm text-white rounded-lg group-hover:scale-110 transition-transform duration-300">
-                    {service.icon}
-                  </div>
-                  <h3 className="absolute bottom-4 left-4 right-4 text-2xl font-bold text-white">
-                    {service.title}
-                  </h3>
-                </div>
-                <div className="p-6">
-                  <p className="text-gray-600 leading-relaxed mb-4">
-                    {service.description}
-                  </p>
-                  <div className="flex items-center text-black font-semibold group-hover:translate-x-2 transition-transform duration-300">
-                    <span>Learn More</span>
-                    <ArrowRight className="h-5 w-5 ml-2" />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link
-              to="/services"
-              className="inline-block px-8 py-4 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg"
-            >
-              View All Services
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section ref={benefitsRef} className="relative py-20 sm:py-24 lg:py-32 overflow-hidden bg-gradient-to-br from-gray-100 via-gray-50 to-white">
-        {/* Background Image with Parallax */}
-        <div className="absolute inset-0 overflow-hidden z-0">
-          <div
-            ref={benefitsBgRef}
-            className="absolute inset-0 will-change-transform z-0"
-            style={{ transform: 'translate3d(0, 0, 0)' }}
-          >
-            <img
-              src={networkingImg}
-              alt="Networking"
-              className="w-full h-full object-cover opacity-45"
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-100/50 via-gray-50/40 to-white/50 z-0" />
-        </div>
-        
-        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
-              Why Choose Africa IT Solutions?
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-              We combine localized understanding with global-standard technology practices to deliver outcomes that matter.
-            </p>
-            <div className="w-24 h-1 bg-black mx-auto mt-6" />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit) => (
-              <div
-                key={benefit.title}
-                className="relative bg-white/95 backdrop-blur-sm p-8 rounded-lg border border-gray-200 hover:border-gray-400 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl"
-              >
-                {/* Subtle background pattern on each card */}
-                <div className="absolute inset-0 rounded-lg overflow-hidden opacity-15 z-0">
-                  <img
-                    src={networkSecurityImg}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="relative z-10">
-                  <div className="p-3 bg-black text-white rounded-lg w-fit mb-4 transition-transform duration-300 hover:scale-110">
-                    {benefit.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-black mb-3">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {benefit.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative py-20 sm:py-24 lg:py-32 bg-black text-white overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src={networkSecurityImg}
-            alt="Network Security"
-            className="w-full h-full object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-black/85 to-black/90 z-0" />
-        </div>
-        
-        {/* Grid Pattern Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:24px_24px] z-0" />
-        
-        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
-              Ready to Transform Your Business?
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Let's discuss how our IT solutions can drive growth, efficiency, and innovation for your organization.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/contact"
-                className="px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-              >
-                Get Started Today
-              </Link>
-              <Link
-                to="/about"
-                className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105"
-              >
-                Learn More About Us
-              </Link>
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Button to={to('contact')}>{t.starlink.primary}</Button>
+              <Button to={to('services', 'starlink')} variant="secondary">
+                {t.starlink.secondary}
+              </Button>
             </div>
           </div>
         </div>
       </section>
-    </div>
+
+      {/* What else we do */}
+      <section className="bg-paper py-20 sm:py-28 lg:py-32">
+        <div className="container-site">
+          <Reveal className="max-w-2xl">
+            <h2 className="t-h1 text-ink">{t.more.title}</h2>
+            <p className="t-lede measure mt-5">{t.more.intro}</p>
+          </Reveal>
+
+          <ul className="mt-12 divide-y divide-mist/60 border-y border-mist/60 lg:mt-16">
+            {t.more.items.map((item) => (
+              <li
+                key={item.id}
+                className="group relative grid gap-3 py-8 lg:grid-cols-12 lg:gap-10 lg:py-10"
+              >
+                <h3 className="t-h3 text-ink transition-colors duration-200 group-hover:text-jacaranda lg:col-span-5">
+                  <span className="bg-linear-to-r from-jacaranda to-jacaranda bg-[length:0%_1px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size] duration-300 ease-out group-hover:bg-[length:100%_1px]">
+                    {item.name}
+                  </span>
+                </h3>
+                <div className="lg:col-start-7 lg:col-span-6">
+                  <p className="measure">{item.text}</p>
+                  <Link
+                    to={to('services', item.id)}
+                    aria-label={item.aria}
+                    className="link mt-3 inline-block after:absolute after:inset-0 after:content-['']"
+                  >
+                    {t.more.more}
+                  </Link>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Why us */}
+      <section className="on-ink py-20 sm:py-28 lg:py-32">
+        <div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="lg:col-span-5">
+            <h2 className="t-h1">{t.why.title}</h2>
+            <p className="t-lede measure mt-5">{t.why.body}</p>
+            <p className="measure mt-8 text-sm">{t.why.facts}</p>
+          </Reveal>
+
+          <dl className="divide-y divide-white/15 border-y border-white/15 lg:col-start-7 lg:col-span-6">
+            {t.why.reasons.map(([name, detail]) => (
+              <div key={name} className="py-6">
+                <dt className="t-h3 text-white">{name}</dt>
+                <dd className="mt-2 measure">{detail}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* Closing call to action */}
+      <section className="bg-paper py-20 sm:py-28 lg:py-32">
+        <div className="container-site">
+          <div className="max-w-2xl">
+            <h2 className="t-h1 text-ink">{t.cta.title}</h2>
+            <p className="t-lede measure mt-5">{t.cta.body}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button href={COMPANY.whatsappHref}>{t.cta.whatsapp}</Button>
+              <Button href={COMPANY.phoneHref} variant="secondary">
+                {t.cta.phone} {COMPANY.phoneDisplay}
+              </Button>
+            </div>
+            <p className="mt-6 text-sm">
+              <Link to={to('contact')} className="link">
+                {t.cta.form}
+              </Link>
+            </p>
+          </div>
+        </div>
+      </section>
+    </>
   )
 }

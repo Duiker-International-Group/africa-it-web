@@ -1,8 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://africait.co.mz/</loc></url>
-  <url><loc>https://africait.co.mz/services</loc></url>
-  <url><loc>https://africait.co.mz/about</loc></url>
-  <url><loc>https://africait.co.mz/contact</loc></url>
-  <url><loc>https://africait.co.mz/faq</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://africait.co.mz/</loc>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://africait.co.mz/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://africait.co.mz/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://africait.co.mz/"/>
+  </url>
+  <url>
+    <loc>https://africait.co.mz/en</loc>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://africait.co.mz/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://africait.co.mz/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://africait.co.mz/"/>
+  </url>
+  <url>
+    <loc>https://africait.co.mz/servicos</loc>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://africait.co.mz/servicos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://africait.co.mz/en/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://africait.co.mz/servicos"/>
+  </url>
+  <url>
+    <loc>https://africait.co.mz/en/services</loc>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://africait.co.mz/servicos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://africait.co.mz/en/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://africait.co.mz/servicos"/>
+  </url>
+  <url>
+    <loc>https://africait.co.mz/sobre</loc>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://africait.co.mz/sobre"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://africait.co.mz/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://africait.co.mz/sobre"/>
+  </url>
+  <url>
+    <loc>https://africait.co.mz/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://africait.co.mz/sobre"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://africait.co.mz/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://africait.co.mz/sobre"/>
+  </url>
+  <url>
+    <loc>https://africait.co.mz/contacto</loc>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://africait.co.mz/contacto"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://africait.co.mz/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://africait.co.mz/contacto"/>
+  </url>
+  <url>
+    <loc>https://africait.co.mz/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://africait.co.mz/contacto"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://africait.co.mz/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://africait.co.mz/contacto"/>
+  </url>
+  <url>
+    <loc>https://africait.co.mz/perguntas-frequentes</loc>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://africait.co.mz/perguntas-frequentes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://africait.co.mz/en/faq"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://africait.co.mz/perguntas-frequentes"/>
+  </url>
+  <url>
+    <loc>https://africait.co.mz/en/faq</loc>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://africait.co.mz/perguntas-frequentes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://africait.co.mz/en/faq"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://africait.co.mz/perguntas-frequentes"/>
+  </url>
 </urlset>
