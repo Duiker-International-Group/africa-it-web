@@ -19,6 +19,16 @@ and is deployed with the `cf` CLI (no Wrangler config).
 - Node.js 22.18+ (Node 25 works; 22.20 hit a module-loader bug with the Vite plugin)
 - `npx cf auth login` once per machine
 
+## CI/CD
+
+`.github/workflows/deploy.yml` runs on GitHub Actions:
+
+- Every push and pull request: type-check, lint and a build dry run.
+- Push to `main`: applies D1 migrations, then deploys to Cloudflare Workers.
+
+Needs two repository secrets: `CLOUDFLARE_API_TOKEN` (Workers Scripts, D1,
+Workers Routes/Custom Domains edit) and `CLOUDFLARE_ACCOUNT_ID`.
+
 ## Commands
 
 ```bash
