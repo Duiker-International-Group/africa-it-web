@@ -27,7 +27,7 @@ A modern, responsive website for Africa IT Solutions, a Mozambican-based IT serv
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Africa-IT-Solutions/website.git
+git clone https://github.com/Duiker-International-Group/africa-it-web.git
 cd website
 ```
 
