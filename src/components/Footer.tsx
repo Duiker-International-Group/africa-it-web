@@ -1,164 +1,105 @@
-import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import logo from '../assets/logo.png'
+import Logo from './ui/Logo'
+import { useCopy, useLang, useTo, type RouteKey } from '../i18n'
+import { COMPANY } from '../content/company'
 
-const socialLinks = [
-  { icon: <Facebook className="h-5 w-5" />, href: '#', label: 'Facebook' },
-  { icon: <Twitter className="h-5 w-5" />, href: '#', label: 'Twitter' },
-  { icon: <Linkedin className="h-5 w-5" />, href: '#', label: 'LinkedIn' },
-  { icon: <Instagram className="h-5 w-5" />, href: '#', label: 'Instagram' },
-]
-
-const quickLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Services', href: '/services' },
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
-  { label: 'FAQ', href: '/faq' },
-]
-
-const services = [
-  'Starlink Hardware & Services',
-  'Networking Solutions',
-  'Software Development',
-  'Hardware Sales & Support',
-  'IT Training',
-]
+const copy = {
+  pt: {
+    tagline: 'Revendedor Autorizado Starlink e serviços de TI para empresas e famílias em Moçambique.',
+    pages: 'Páginas',
+    nav: [
+      ['home', 'Início'],
+      ['services', 'Serviços'],
+      ['about', 'Sobre nós'],
+      ['faq', 'Perguntas frequentes'],
+      ['contact', 'Contacto'],
+    ] as [RouteKey, string][],
+    contact: 'Contacto',
+    visit: 'Visite-nos',
+    hours: 'Horário',
+    rights: 'Todos os direitos reservados.',
+    starlink: 'Starlink é uma marca registada da Space Exploration Technologies Corp.',
+  },
+  en: {
+    tagline: 'Authorised Starlink Retailer and IT services for businesses and homes in Mozambique.',
+    pages: 'Pages',
+    nav: [
+      ['home', 'Home'],
+      ['services', 'Services'],
+      ['about', 'About'],
+      ['faq', 'FAQ'],
+      ['contact', 'Contact'],
+    ] as [RouteKey, string][],
+    contact: 'Contact',
+    visit: 'Visit us',
+    hours: 'Opening hours',
+    rights: 'All rights reserved.',
+    starlink: 'Starlink is a trademark of Space Exploration Technologies Corp.',
+  },
+}
 
 export default function Footer() {
+  const t = useCopy(copy)
+  const lang = useLang()
+  const to = useTo()
+  const heading = 'mb-4 font-display text-base font-semibold text-white'
+  const item = 'text-sm text-mist transition-colors hover:text-white'
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {/* Company Info */}
-          <div className="space-y-4">
-            <Link to="/">
-              <img
-                src={logo}
-                alt="Africa IT Solutions Logo"
-                className="h-12 w-auto mb-4"
-              />
-            </Link>
-            <p className="text-gray-400 leading-relaxed">
-              Africa IT Solutions is an Authorised Starlink Retailer and leading IT solutions provider in Mozambique, delivering Starlink connectivity and comprehensive technology services.
-            </p>
-            <div className="flex space-x-4 pt-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
-                  className="p-2 bg-gray-800 rounded-lg hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-110"
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-white font-semibold text-lg mb-4">
-              Quick Links
-            </h3>
-            <ul className="space-y-2">
-              {quickLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    to={link.href}
-                    className="text-gray-400 hover:text-white transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h3 className="text-white font-semibold text-lg mb-4">
-              Our Services
-            </h3>
-            <ul className="space-y-2">
-              {services.map((service) => (
-                <li key={service}>
-                  {service === 'Starlink Hardware & Services' ? (
-                    <Link
-                      to="/services#starlink"
-                      className="text-gray-400 hover:text-white transition-colors duration-200"
-                    >
-                      {service}
-                    </Link>
-                  ) : (
-                    <span className="text-gray-400 hover:text-white transition-colors duration-200 cursor-default">
-                      {service}
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-white font-semibold text-lg mb-4">
-              Contact Us
-            </h3>
-            <ul className="space-y-3 text-gray-400">
-              <li>
-                <span className="block">AV Abel Baptista esquina com avenida Samora MACHEL</span>
-                <span className="block">Talhão número 374A</span>
-                <span className="block">Loja número 3</span>
-                <span className="block">Maputo, Mozambique</span>
-              </li>
-              <li>
-                <a
-                  href="tel:+258859232670"
-                  className="hover:text-white transition-colors"
-                >
-                  +258 859232670
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:sales@africait.co.mz"
-                  className="hover:text-white transition-colors"
-                >
-                  sales@africait.co.mz
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:starlink@africait.co.mz"
-                  className="hover:text-white transition-colors"
-                >
-                  starlink@africait.co.mz
-                </a>
-              </li>
-            </ul>
-          </div>
+    <footer className="on-ink border-t border-white/10">
+      <div className="container-site grid gap-12 py-16 sm:py-20 md:grid-cols-2 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <Link to={to('home')} className="inline-block text-white" aria-label="Africa IT Solutions">
+            <Logo className="h-12" />
+          </Link>
+          <p className="mt-5 max-w-xs text-sm">{t.tagline}</p>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Africa IT Solutions. All rights
-              reserved.
-            </p>
-            <div className="flex space-x-6 text-sm text-gray-400">
-              <a href="#" className="hover:text-white transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
-                Terms of Service
-              </a>
-            </div>
-          </div>
+        <div className="lg:col-span-2">
+          <h2 className={heading}>{t.pages}</h2>
+          <ul className="space-y-3">
+            {t.nav.map(([key, label]) => (
+              <li key={key}>
+                <Link to={to(key)} className={item}>
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="lg:col-span-3">
+          <h2 className={heading}>{t.contact}</h2>
+          <ul className="space-y-3">
+            <li><a className={item} href={COMPANY.phoneHref}>{COMPANY.phoneDisplay}</a></li>
+            <li><a className={item} href={COMPANY.whatsappHref} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li><a className={item} href={`mailto:${COMPANY.emailSales}`}>{COMPANY.emailSales}</a></li>
+            <li><a className={item} href={`mailto:${COMPANY.emailStarlink}`}>{COMPANY.emailStarlink}</a></li>
+          </ul>
+        </div>
+
+        <div className="lg:col-span-3">
+          <h2 className={heading}>{t.visit}</h2>
+          <a className={`${item} block max-w-xs`} href={COMPANY.mapsHref} target="_blank" rel="noopener noreferrer">
+            {COMPANY.address[lang]}
+          </a>
+          <h2 className={`${heading} mt-8`}>{t.hours}</h2>
+          <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
+            {COMPANY.hours[lang].map(([d, h]) => (
+              <div key={d} className="contents">
+                <dt>{d}</dt>
+                <dd className="text-white tabular-nums">{h}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+      <div className="border-t border-white/10">
+        <div className="container-site flex flex-col gap-2 py-6 text-xs text-mist/70 sm:flex-row sm:justify-between">
+          <p>© {new Date().getFullYear()} Africa IT Solutions. {t.rights}</p>
+          <p>{t.starlink}</p>
         </div>
       </div>
     </footer>
   )
 }
-
